@@ -6,9 +6,17 @@
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 </head>
 <body>
-    <div id="chart" style="width:400px;height:400px;"></div>
+    <div id="chart" style="width:800px;height:800px;"></div>
 </body>
-
+<!-- php -->
+public function echarts()
+    {
+        $this->assign('arr1',json_encode([00,300,400,500,200,700,800,300]));
+        $this->assign('arr2',json_encode([-200,700,500,700,400,500,400,500]));
+        $this->assign('arr3',json_encode([266,300,550,720,630,600,650,450]));
+        return $this->fetch();
+    }
+<!-- PHP -->
 <script>
 // 获取到这个DOM节点，然后初始化
  
@@ -45,26 +53,53 @@
         }],
         yAxis: [{
  
-            type: 'value'
+            type: 'value',
+            axisLabel : {
+                formatter: '{value} 元'//单位
+            }
         }],
         series: [{
             name: '充值',
             type: 'line',
             symbol: 'none',
-            smooth: 0.3,
+            smooth: 0.6,
             color: ['#66AEDE'],
-            data: {:$arr1}//PHP后台传入JSON数据，可以进行经更新
+            data: {:$arr1},
+            //PHP后台传入JSON数据，可以进行经更新
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'},
+                    {type : 'average', name: '平均值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        
 
         }, {
             name: '消费',
             type: 'line',
             smooth: 0.3,
-            data: {:$arr2}
+            data: {:$arr2},
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
         },{
             name: '积分',
             type: 'line',
             smooth: 0.3,
-            data: {:$arr3}
+            data: {:$arr3},
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
         }]
     };
     
