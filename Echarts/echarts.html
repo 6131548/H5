@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>echarts.js案例一</title>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+</head>
+<body>
+    <div id="chart" style="width:400px;height:400px;"></div>
+</body>
 
+<script>
+// 获取到这个DOM节点，然后初始化
+ 
+    var myChart = echarts.init(document.getElementById("chart"));
+ 
+// option 里面的内容基本涵盖你要画的图表的所有内容
+    var option = {
+        // 给echarts图设置背景色
+        backgroundColor: '#FBFBFB',                  // -----------> // 给echarts图设置背景色   
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['充值', '消费','积分']
+        },
+ 
+        calculable: true,
+ 
+ 
+        xAxis: [{
+            type: 'category',
+            // boundaryGap: false,
+            data: function() {
+                var list = [];
+                for (var i = 10; i <= 18; i++) {
+                    if (i <= 12) {
+                        list.push('2016-' + i + '-01');
+                    } else {
+                        list.push('2017-' + (i - 12) + '-01');
+                    }
+                }
+                return list;
+            }()
+        }],
+        yAxis: [{
+ 
+            type: 'value'
+        }],
+        series: [{
+            name: '充值',
+            type: 'line',
+            symbol: 'none',
+            smooth: 0.3,
+            color: ['#66AEDE'],
+            data: {:$arr1}//PHP后台传入JSON数据，可以进行经更新
+
+        }, {
+            name: '消费',
+            type: 'line',
+            smooth: 0.3,
+            data: {:$arr2}
+        },{
+            name: '积分',
+            type: 'line',
+            smooth: 0.3,
+            data: {:$arr3}
+        }]
+    };
+    
+ 
+    // 一定不要忘了这个，具体是干啥的我忘了，官网是这样写的使用刚指定的配置项和数据显示图表。  
+    myChart.setOption(option)
+    //以下更新更改这些参数可以实现更新
+    
+    // data = [500,190,450,130,400]
+    // option.series[0].data=data
+    // option.xAxis[0].data=function(){
+    //     var list = [];
+    //             for (var i = 10; i <= 18; i++) {
+    //                 if (i <= 12) {
+    //                     list.push('2011-' + i + '-01');
+    //                 } else {
+    //                     list.push('2012-' + (i - 12) + '-01');
+    //                 }
+    //             }
+    //             return list;
+    // }()
+    // option.xAxis[0].data = [1,2,3,4,5,6,7,8]
+    // myChart.setOption(option)
+    // console.log(option);
+</script>
+</html>
